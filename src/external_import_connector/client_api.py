@@ -9,7 +9,7 @@ class ConnectorClient:
         self.config = config
 
         # Define headers in session and update when needed
-        headers = {"Bearer": self.config.api_key}
+        headers = {"Authorization": self.config.api_key}
         self.session = requests.Session()
         self.session.headers.update(headers)
 
@@ -37,18 +37,25 @@ class ConnectorClient:
 
     def get_entities(self, params=None) -> dict:
         """
-        If params is None, retrieve all CVEs in National Vulnerability Database
-        :param params: Optional Params to filter what list to return
-        :return: A list of dicts of the complete collection of CVE from NVD
+
         """
         try:
             # ===========================
             # === Add your code below ===
             # ===========================
 
-            # response = self._request_data(self.config.api_base_url, params=params)
-
-            # return response.json()
+            response = self._request_data(self.config.api_base_url, params=params)
+            if response.status_code != 200:
+                self.helper.connector_logger.error(
+                    "Error while fetching data",
+                    {"url_path": self.config.api_base_url, "status_code": response.status_code},
+                )
+                return None
+            self.helper.connector_logger.info(
+                "Successfully fetched data: " + str(response.text),
+                {"url_path": self.config.api_base_url, "status_code": response.status_code},
+            )
+            return response.json()
             # ===========================
             # === Add your code above ===
             # ===========================
