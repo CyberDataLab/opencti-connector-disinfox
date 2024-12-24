@@ -3,6 +3,8 @@ services:
   connector-template:
     build:
       context: .
+    volumes:
+      - ./src:/opt/opencti-connector-template
     environment:
       # Connector's generic execution parameters
       - OPENCTI_URL=${OPENCTI_URL}
