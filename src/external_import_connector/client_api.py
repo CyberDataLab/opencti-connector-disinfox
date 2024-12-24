@@ -43,7 +43,9 @@ class ConnectorClient:
             # ===========================
             # === Add your code below ===
             # ===========================
-
+            self.helper.connector_logger.info(
+                "Fetching data from external source", {"url_path": self.config.api_base_url}
+            )
             response = self._request_data(self.config.api_base_url, params=params)
             if response.status_code != 200:
                 self.helper.connector_logger.error(
@@ -51,11 +53,12 @@ class ConnectorClient:
                     {"url_path": self.config.api_base_url, "status_code": response.status_code},
                 )
                 return None
+            objects = response.json()
             self.helper.connector_logger.info(
-                "Successfully fetched data: " + str(response.text),
+                "Successfully fetched data: " + str(len(objects.get("incidents", []))) + " objects",
                 {"url_path": self.config.api_base_url, "status_code": response.status_code},
             )
-            return response.json()
+            return objects
             # ===========================
             # === Add your code above ===
             # ===========================
