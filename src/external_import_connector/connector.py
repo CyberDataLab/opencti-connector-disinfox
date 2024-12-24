@@ -69,14 +69,15 @@ class ConnectorTemplate:
         # ===========================
 
         # Get entities from external sources
-        # last_fetch = self.helper.get_state().get("last_fetch")
-        # if not last_fetch: # If its the first run, we set epoch as last_fetch
-        #     self.helper.connector_logger.info("First run, setting last_fetch to epoch")
-        last_fetch = datetime.fromtimestamp(0).isoformat(timespec="milliseconds")
+        last_fetch = self.helper.get_state().get("last_fetch")
+        if not last_fetch: # If its the first run, we set epoch as last_fetch
+            self.helper.connector_logger.info("First run, setting last_fetch to epoch")
+            last_fetch = datetime.fromtimestamp(0).isoformat(timespec="microseconds")
+        last_fetch = last_fetch + "Z"
         entities = self.client.get_entities(params={"newer_than": last_fetch})
         if entities:
             # Update last_fetch
-            now = datetime.now().isoformat(sep="T", timespec="milliseconds")
+            now = datetime.now().isoformat(timespec="microseconds") + "Z"
             self.helper.set_state({"last_fetch": now})
 
         # # Convert into STIX2 object and add it on a list
