@@ -13,9 +13,9 @@ services:
       - CONNECTOR_ID=${CONNECTOR_ID}
       - CONNECTOR_NAME="DISINFOX Connector"
       - CONNECTOR_SCOPE="stix2"
-      - CONNECTOR_LOG_LEVEL=error
+      - CONNECTOR_LOG_LEVEL=info
       # ISO8601 format in String, start with 'P...' for Period
-      - CONNECTOR_DURATION_PERIOD=P1M
+      - CONNECTOR_DURATION_PERIOD=PT5M
 
       # Connector's definition parameters OPTIONAL
       # - CONNECTOR_QUEUE_THRESHOLD=500 # Default 500Mo, Float accepted
