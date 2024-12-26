@@ -1,0 +1,1 @@
+# opencti-connector-disinfox
