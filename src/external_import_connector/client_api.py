@@ -53,12 +53,18 @@ class ConnectorClient:
                     {"url_path": self.config.api_base_url, "status_code": response.status_code},
                 )
                 return None
-            objects = response.json()
+            bundle = response.json()
+            if not bundle:
+                self.helper.connector_logger.info(
+                    "No data fetched from the external source",
+                    {"url_path": self.config.api_base_url, "status_code": response.status_code},
+                )
+                return []
             self.helper.connector_logger.info(
-                "Successfully fetched data: " + str(len(objects.get("incidents", []))) + " objects",
+                "Successfully fetched data: " + str(len(bundle.get("objects", []))) + " objects",
                 {"url_path": self.config.api_base_url, "status_code": response.status_code},
             )
-            return objects
+            return bundle.get("objects", [])
             # ===========================
             # === Add your code above ===
             # ===========================

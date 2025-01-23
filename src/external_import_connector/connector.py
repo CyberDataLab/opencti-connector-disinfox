@@ -87,7 +87,7 @@ class ConnectorTemplate:
         # for entity in entities:
         #     entity_to_stix = self.converter_to_stix.create_obs(entity["value"])
         #     stix_objects.append(entity_to_stix)
-        stix_objects = entities.get("incidents", [])
+        stix_objects = entities
         
         # Example of creating a STIX object
         stix_id = uuid.uuid4()
