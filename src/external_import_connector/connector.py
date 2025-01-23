@@ -69,7 +69,10 @@ class ConnectorTemplate:
         # ===========================
 
         # Get entities from external sources
-        last_fetch = self.helper.get_state().get("last_fetch")
+        state = self.helper.get_state()
+        last_fetch = None
+        if state: # First run will not have a registered state
+            last_fetch = state.get("last_fetch")
         if not last_fetch: # If its the first run, we set epoch as last_fetch
             self.helper.connector_logger.info("First run, setting last_fetch to epoch")
             last_fetch = datetime.fromtimestamp(0).isoformat(timespec="microseconds")
