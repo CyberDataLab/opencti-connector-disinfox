@@ -7,7 +7,7 @@ services:
       - ./src:/opt/opencti-connector-template
     environment:
       # Connector's generic execution parameters
-      - OPENCTI_URL=${OPENCTI_URL}
+      - OPENCTI_URL=${OPENCTI_BASE_URL}
       - OPENCTI_TOKEN=${OPENCTI_TOKEN}
       # Connector's definition parameters REQUIRED
       - CONNECTOR_ID=${CONNECTOR_ID}
